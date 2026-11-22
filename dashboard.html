@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Dashboard petugas DLH Kota Yogyakarta: metrik pohon, peta lokasi, dan pemantauan kondisi pohon perkotaan.">
+  <meta name="theme-color" content="#1B3B1A">
+  <title>Dashboard DLH — Sistem Informasi Pohon Perkotaan</title>
+  <link rel="icon" type="image/png" href="assets/DLHLog.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="halaman-dashboard">
+  <a class="lewati-ke-konten" href="#isi-dasbor">Lewati ke konten utama</a>
+
+  <div class="tata-letak-dasbor">
+    <aside class="sidebar" id="sidebar-dasbor" aria-label="Navigasi dashboard">
+      <a class="sidebar-merek" href="index.html" aria-label="Buka halaman publik Sistem Informasi Pohon Perkotaan">
+        <img class="logo-dlh" src="assets/DLHLog.png" alt="Logo DLH" width="38" height="38">
+        <span class="sidebar-merek-teks">
+          <span class="sidebar-judul">Sistem Informasi Pohon</span>
+          <span class="sidebar-sub">Dashboard DLH</span>
+        </span>
+      </a>
+
+      <nav class="sidebar-nav" aria-label="Menu utama">
+        <button class="menu-dasbor aktif" type="button" data-tampilan="dashboard" aria-current="page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <rect x="3.5" y="3.5" width="7" height="7" rx="1.5"></rect>
+            <rect x="13.5" y="3.5" width="7" height="7" rx="1.5"></rect>
+            <rect x="3.5" y="13.5" width="7" height="7" rx="1.5"></rect>
+            <rect x="13.5" y="13.5" width="7" height="7" rx="1.5"></rect>
+          </svg>
+          <span>Dashboard</span>
+        </button>
+        <button class="menu-dasbor" type="button" data-tampilan="data-pohon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <rect x="3.5" y="4.5" width="17" height="15" rx="2"></rect>
+            <path d="M3.5 9.5h17M3.5 14.5h17M9 9.5v10"></path>
+          </svg>
+          <span>Data Pohon</span>
+        </button>
+        <button class="menu-dasbor" type="button" data-tampilan="laporan">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M6 3.5h8.5L19 8v12.5H6z"></path>
+            <path d="M14 3.5V8h5M9 12.5h6M9 16.5h4"></path>
+          </svg>
+          <span>Daftar Laporan Warga</span>
+          <span class="lencana-menu" id="lencana-laporan" hidden></span>
+        </button>
+        <button class="menu-dasbor" type="button" data-tampilan="jadwal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <rect x="3.5" y="5" width="17" height="15.5" rx="2"></rect>
+            <path d="M8 3v4M16 3v4M3.5 9.5h17M8 13.5h2M14 13.5h2M8 17h2M14 17h2"></path>
+          </svg>
+          <span>Jadwal Pemeliharaan</span>
+        </button>
+        <button class="menu-dasbor" type="button" data-tampilan="pengaturan">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="3.2"></circle>
+            <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09A1.7 1.7 0 0 0 15 4.6a1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9c.14.62.7 1 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.51 1Z"></path>
+          </svg>
+          <span>Pengaturan</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-kaki">
+        <p class="sidebar-catatan">Dinas Lingkungan Hidup<br>Kota Yogyakarta</p>
+        <button class="tombol-reset-data" id="tombol-reset-data" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M4 5v5h5"></path>
+            <path d="M5.5 14a7 7 0 1 0 1.2-7.5L4 10"></path>
+          </svg>
+          Reset data demo
+        </button>
+      </div>
+    </aside>
+
+    <div class="konten-dasbor">
+      <header class="bar-atas">
+        <button class="tombol-menu-dasbor" id="tombol-menu-dasbor" type="button" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="sidebar-dasbor">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+
+        <form class="cari-dasbor" id="form-cari-pohon" role="search" novalidate>
+          <label class="sr-only" for="cari-pohon-dasbor">Cari ID pohon</label>
+          <span class="ikon-cari-dasbor" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="m16.2 16.2 4.3 4.3"></path>
+            </svg>
+          </span>
+          <input id="cari-pohon-dasbor" name="cari" type="search" placeholder="Cari ID pohon (contoh: PH-YOG-042)" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-describedby="error-cari-dasbor status-cari-dasbor">
+          <p class="pesan-error pesan-cari-dasbor" id="error-cari-dasbor" role="alert" hidden></p>
+          <p class="sr-only" id="status-cari-dasbor" aria-live="polite"></p>
+        </form>
+
+        <div class="waktu-dasbor">
+          <p class="waktu-tanggal" id="tanggal-dasbor"></p>
+          <p class="waktu-jam" id="jam-dasbor"></p>
+        </div>
+
+        <div class="profil-dasbor">
+          <img class="profile" src="assets/Profile.jpg" alt="Profile" width="38" height="38">
+          <span class="profil-teks">
+            <span class="profil-nama">Dasraman</span>
+            <span class="profil-zona">Zone 1 - Malioboro/Gondomanan</span>
+          </span>
+        </div>
+      </header>
+
+      <main class="isi-dasbor" id="isi-dasbor">
+        <section class="tampilan" id="tampilan-dashboard" aria-labelledby="judul-dasbor">
+          <div class="kepala-dasbor">
+            <div>
+              <p class="eyebrow-dasbor">Dashboard</p>
+              <h1 class="judul-dasbor" id="judul-dasbor">Kawasan Taman Malioboro</h1>
+              <p class="sub-dasbor">Pantau kondisi pohon, lokasi, dan laporan warga.</p>
+            </div>
+          </div>
+
+          <section class="metrik-grid" aria-label="Metrik utama">
+            <article class="kartu-metrik metrik-total">
+              <span class="ikon-metrik" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                  <path d="M12 3 6 11h3l-2 4h10l-2-4h3L12 3Z"></path>
+                  <path d="M12 15v6M9 21h6"></path>
+                </svg>
+              </span>
+              <div>
+                <p class="metrik-label">Total Pohon</p>
+                <p class="metrik-nilai" id="metrik-total">0</p>
+                <p class="metrik-sub" id="metrik-total-sub">Pohon terdata</p>
+              </div>
+            </article>
+
+            <article class="kartu-metrik metrik-aman">
+              <span class="ikon-metrik" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                  <path d="M12 3.5 5 6.2v5.4c0 4.3 2.9 7.4 7 8.9 4.1-1.5 7-4.6 7-8.9V6.2L12 3.5Z"></path>
+                  <path d="m9 12 2.2 2.2L15.5 10"></path>
+                </svg>
+              </span>
+              <div>
+                <p class="metrik-label">Kondisi Aman</p>
+                <p class="metrik-nilai" id="metrik-aman">0</p>
+                <p class="metrik-sub" id="metrik-aman-sub">Pohon sehat</p>
+              </div>
+            </article>
+
+            <article class="kartu-metrik metrik-perhatian">
+              <span class="ikon-metrik" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                  <path d="M12 4 3.5 19.5h17L12 4Z"></path>
+                  <path d="M12 9.5v4.5M12 17h.01"></path>
+                </svg>
+              </span>
+              <div>
+                <p class="metrik-label">Perlu Perhatian</p>
+                <p class="metrik-nilai" id="metrik-perhatian">0</p>
+                <p class="metrik-sub" id="metrik-perhatian-sub">Perlu pemantauan</p>
+              </div>
+            </article>
+
+            <article class="kartu-metrik metrik-laporan">
+              <span class="ikon-metrik" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                  <path d="M4 5.5h16v13H4z"></path>
+                  <path d="m4 7 8 5.5L20 7"></path>
+                </svg>
+              </span>
+              <div>
+                <p class="metrik-label">Laporan Warga Baru</p>
+                <p class="metrik-nilai" id="metrik-laporan">0</p>
+                <p class="metrik-sub" id="metrik-laporan-sub">Menunggu verifikasi</p>
+              </div>
+            </article>
+          </section>
+
+          <div class="grid-dasbor" id="grid-dasbor">
+            <section class="kartu kartu-peta" aria-labelledby="judul-peta">
+              <div class="kepala-kartu">
+                <div>
+                  <h2 class="judul-kartu" id="judul-peta">Peta Lokasi Pohon - Kawasan Taman Malioboro</h2>
+                  <p class="sub-kartu">Klik pin untuk melihat detail pohon, atau cari ID untuk menyorotnya.</p>
+                </div>
+                <span class="penanda-jumlah" id="jumlah-pin">0 pohon</span>
+              </div>
+
+              <div class="legenda-peta" aria-label="Legenda status pohon">
+                <span class="legenda-item"><span class="legenda-titik legenda-aman" aria-hidden="true"></span>Sehat &amp; Aman</span>
+                <span class="legenda-item"><span class="legenda-titik legenda-perhatian" aria-hidden="true"></span>Perlu Perhatian</span>
+                <span class="legenda-item"><span class="legenda-titik legenda-kritis" aria-hidden="true"></span>Kondisi Kritis</span>
+                <span class="legenda-item"><span class="legenda-titik legenda-dikerjakan" aria-hidden="true"></span>Sedang Dikerjakan</span>
+              </div>
+
+              <div class="alat-peta">
+                <span class="petunjuk-zoom">Roda mouse atau cubit untuk zoom</span>
+                <div class="tombol-zoom-grup" role="group" aria-label="Kontrol zoom peta">
+                  <button class="tombol tombol-sekunder tombol-kecil tombol-zoom-peta" id="zoom-keluar" type="button" aria-label="Perkecil peta" title="Perkecil peta">−</button>
+                  <button class="tombol tombol-sekunder tombol-kecil tombol-zoom-peta" id="zoom-masuk" type="button" aria-label="Perbesar peta" title="Perbesar peta">+</button>
+                  <button class="tombol tombol-sekunder tombol-kecil tombol-zoom-reset" id="zoom-reset" type="button" aria-label="Reset tampilan peta" title="Reset tampilan peta">Reset tampilan</button>
+                </div>
+                <p class="sr-only" id="status-zoom-peta" aria-live="polite"></p>
+              </div>
+
+              <div class="bingkai-peta">
+                <svg class="peta-svg" id="peta-pohon" viewBox="0 0 1000 640" role="group" aria-label="Peta lokasi pohon di Kawasan Taman Malioboro">
+                  <rect width="1000" height="640" fill="#EEF3EA"></rect>
+
+                  <g aria-hidden="true">
+                    <path d="M40 40h520a24 24 0 0 1 24 24v220H40z" fill="#E3EFDD"></path>
+                    <path d="M660 360h300v240H660z" fill="#E3EFDD"></path>
+                    <path d="M60 490h280v110H60z" fill="#E7F1E1"></path>
+                    <rect x="490" y="229" width="235" height="132" rx="18" fill="#DCEFD5" stroke="#B7D3AD" stroke-width="2"></rect>
+
+                    <g fill="#EDEEE8" stroke="#E0E3DB" stroke-width="2">
+                      <rect x="86" y="76" width="132" height="94" rx="8"></rect>
+                      <rect x="244" y="88" width="122" height="82" rx="8"></rect>
+                      <rect x="86" y="230" width="120" height="92" rx="8"></rect>
+                      <rect x="240" y="238" width="128" height="84" rx="8"></rect>
+                      <rect x="600" y="80" width="116" height="92" rx="8"></rect>
+                      <rect x="786" y="84" width="132" height="96" rx="8"></rect>
+                      <rect x="790" y="238" width="140" height="88" rx="8"></rect>
+                      <rect x="92" y="452" width="142" height="104" rx="8"></rect>
+                      <rect x="320" y="452" width="128" height="104" rx="8"></rect>
+                      <rect x="560" y="452" width="122" height="104" rx="8"></rect>
+                      <rect x="792" y="452" width="138" height="104" rx="8"></rect>
+                    </g>
+
+                    <g fill="none" stroke-linecap="round">
+                      <path d="M-20 210h1040" stroke="#DCE2D8" stroke-width="36"></path>
+                      <path d="M-20 210h1040" stroke="#FFFFFF" stroke-width="28"></path>
+                      <path d="M-20 390h1040" stroke="#DCE2D8" stroke-width="58"></path>
+                      <path d="M-20 390h1040" stroke="#FFFFFF" stroke-width="48"></path>
+                      <path d="M450-20v680" stroke="#DCE2D8" stroke-width="66"></path>
+                      <path d="M450-20v680" stroke="#FFFFFF" stroke-width="56"></path>
+                      <path d="M750-20v680" stroke="#DCE2D8" stroke-width="38"></path>
+                      <path d="M750-20v680" stroke="#FFFFFF" stroke-width="30"></path>
+                      <path d="M-20 510h1040" stroke="#DCE2D8" stroke-width="38"></path>
+                      <path d="M-20 510h1040" stroke="#FFFFFF" stroke-width="30"></path>
+                      <path d="M0 640 220 0" stroke="#DCE2D8" stroke-width="30"></path>
+                      <path d="M0 640 220 0" stroke="#F7F9F5" stroke-width="22"></path>
+                    </g>
+
+                    <g class="peta-jalan-label" fill="#98A49B">
+                      <text x="58" y="292">Jl. Pajeksan</text>
+                      <text x="545" y="502">Jl. Bhayangkara</text>
+                      <text x="770" y="200" transform="rotate(-90 770 200)">Jl. Gandekan</text>
+                      <text x="432" y="590" transform="rotate(-90 432 590)">Jl. Malioboro</text>
+                    </g>
+
+                    <text class="peta-taman-label" id="label-taman-peta" x="500" y="247">Taman Malioboro</text>
+
+                    <g transform="translate(936 62)" fill="#A8B2A9">
+                      <circle r="24" fill="#FFFFFF" stroke="#E0E5DD" stroke-width="2"></circle>
+                      <path d="M0-14 6 6 0 2-6 6Z" fill="#2D5A27"></path>
+                      <text x="0" y="20" text-anchor="middle" font-size="11" font-weight="700">U</text>
+                    </g>
+                  </g>
+
+                  <g id="lapisan-pin"></g>
+                  <g id="lapisan-label" pointer-events="none"></g>
+                  <g id="lapisan-pilih" pointer-events="none"></g>
+                </svg>
+              </div>
+            </section>
+
+            <section class="kartu kartu-laporan kartu-notifikasi-laporan" aria-labelledby="judul-laporan">
+              <div class="kepala-kartu">
+                <div>
+                  <h2 class="judul-kartu" id="judul-laporan">Laporan Terbaru</h2>
+                  <p class="sub-kartu">Laporan anonim terbaru dari halaman publik.</p>
+                </div>
+                <span class="penanda-jumlah" id="jumlah-laporan">0 baru</span>
+              </div>
+              <div class="kartu-isi kartu-isi-laporan daftar-notifikasi-laporan" id="daftar-laporan" aria-live="polite"></div>
+              <div class="kaki-kartu-laporan">
+                <button class="tombol tombol-sekunder tombol-blok tombol-lihat-semua" id="tombol-lihat-semua-laporan" type="button">Lihat semua laporan</button>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="tampilan tampilan-data-pohon" id="tampilan-data-pohon" hidden aria-labelledby="judul-data-pohon-halaman">
+            <div class="kepala-dasbor">
+              <div>
+                <p class="eyebrow-dasbor">Data Pohon</p>
+                <h1 class="judul-dasbor" id="judul-data-pohon-halaman">Data Pohon Kawasan</h1>
+                <p class="sub-dasbor">Kelola data seluruh pohon dan tentukan letaknya di peta. Klik peta saat menambah atau mengubah pohon.</p>
+              </div>
+            </div>
+            <div class="slot-peta-data" id="slot-peta-data"></div>
+
+            <section class="kartu kartu-data-pohon" id="kartu-data-pohon" aria-labelledby="judul-data-pohon">
+            <div class="kepala-kartu">
+              <div>
+                <h2 class="judul-kartu" id="judul-data-pohon">Data Pohon</h2>
+                <p class="sub-kartu">Cari, saring, lalu kelola data seluruh pohon kawasan.</p>
+              </div>
+              <span class="penanda-jumlah" id="jumlah-tabel-pohon">0 pohon</span>
+            </div>
+
+            <div class="alat-data-pohon">
+              <form class="cari-data-pohon" id="form-cari-tabel" role="search" novalidate>
+                <label class="sr-only" for="cari-tabel-pohon">Cari kode atau nama pohon</label>
+                <span class="ikon-cari-dasbor" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <path d="m16.2 16.2 4.3 4.3"></path>
+                  </svg>
+                </span>
+                <input class="kontrol kontrol-cari" id="cari-tabel-pohon" name="cari" type="search" placeholder="Cari kode atau nama pohon" autocomplete="off" autocapitalize="characters" spellcheck="false">
+              </form>
+
+              <div class="filter-data-pohon">
+                <label class="sr-only" for="filter-status-pohon">Filter status pohon</label>
+                <select class="pilihan pilihan-filter" id="filter-status-pohon">
+                  <option value="">Semua status</option>
+                  <option value="aman">Sehat &amp; Aman</option>
+                  <option value="perhatian">Perlu Perhatian</option>
+                  <option value="kritis">Kondisi Kritis</option>
+                  <option value="dikerjakan">Sedang Dikerjakan</option>
+                </select>
+                <label class="sr-only" for="filter-lokasi-pohon">Filter lokasi pohon</label>
+                <select class="pilihan pilihan-filter" id="filter-lokasi-pohon">
+                  <option value="">Semua lokasi</option>
+                  <option value="taman">Di dalam taman</option>
+                  <option value="jalan">Di jalan sekitar taman</option>
+                </select>
+              </div>
+
+              <button class="tombol tombol-utama tombol-kecil tombol-tambah-tabel" id="tombol-tambah-pohon-tabel" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">
+                  <path d="M12 5v14M5 12h14"></path>
+                </svg>
+                Tambah Pohon
+              </button>
+            </div>
+
+            <p class="sr-only" id="status-tabel-pohon" aria-live="polite"></p>
+
+            <div class="tabel-gulir" role="region" aria-label="Tabel data pohon" tabindex="0">
+              <table class="tabel-pohon">
+                <caption class="sr-only">Daftar seluruh pohon kawasan beserta lokasi, status, tingkat kesehatan, dan aksi pengelolaan.</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Kode</th>
+                    <th scope="col">Nama</th>
+                    <th scope="col">Nama Latin</th>
+                    <th scope="col">Lokasi</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Kesehatan</th>
+                    <th scope="col" class="kolom-aksi">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="isi-tabel-pohon"></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+
+        <section class="tampilan" id="tampilan-laporan" hidden aria-labelledby="judul-laporan-lengkap">
+          <div class="kepala-dasbor">
+            <div>
+              <p class="eyebrow-dasbor">Daftar Laporan Warga</p>
+              <h1 class="judul-dasbor" id="judul-laporan-lengkap">Laporan Warga</h1>
+              <p class="sub-dasbor">Tinjau laporan anonim lalu jalankan alur penanganan sampai selesai.</p>
+            </div>
+            <p class="penanda-data"><span class="titik-data" aria-hidden="true"></span><span id="ringkasan-laporan">0 laporan</span></p>
+          </div>
+
+          <div class="kartu kartu-daftar-laporan">
+            <div class="kartu-isi kartu-isi-laporan daftar-laporan daftar-laporan-lengkap" id="daftar-laporan-lengkap" aria-live="polite"></div>
+          </div>
+        </section>
+
+        <section class="tampilan" id="tampilan-segera" hidden aria-labelledby="judul-segera">
+          <div class="kartu keadaan-segera">
+            <span class="ikon-segera" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                <circle cx="12" cy="12" r="8.5"></circle>
+                <path d="M12 7.5V12l3 2"></path>
+              </svg>
+            </span>
+            <p class="eyebrow-dasbor">Menu Dashboard</p>
+            <h1 id="judul-segera">Segera hadir</h1>
+            <p class="teks-redup" id="deskripsi-segera">Fitur ini akan tersedia pada versi berikutnya.</p>
+            <button class="tombol tombol-sekunder" id="kembali-dasbor" type="button">Kembali ke Dashboard</button>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="lapisan-sidebar" id="lapisan-sidebar" hidden></div>
+
+  <dialog class="dialog-form-pohon" id="panel-form-pohon" aria-labelledby="judul-form-pohon">
+    <div class="dialog-form-kepala">
+      <div>
+        <h2 class="judul-kartu" id="judul-form-pohon">Tambah Pohon</h2>
+        <p class="sub-kartu" id="sub-form-pohon">Isi data pohon, lalu klik pada peta untuk memilih posisi pin.</p>
+      </div>
+      <button class="panel-tutup" id="tutup-form-pohon" type="button" aria-label="Tutup form pohon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">
+            <path d="m6 6 12 12M18 6 6 18"></path>
+        </svg>
+      </button>
+      </div>
+
+      <form class="form-pohon" id="form-pohon" novalidate>
+        <div class="form-pohon-grid">
+          <div class="form-grup">
+            <label class="label-form" for="input-kode-pohon">Kode pohon</label>
+            <input class="kontrol" id="input-kode-pohon" type="text" readonly aria-describedby="bantuan-kode-pohon">
+            <p class="bantuan" id="bantuan-kode-pohon">Kode dibuat otomatis berurutan dan tidak dapat diubah.</p>
+          </div>
+
+          <div class="form-grup">
+            <label class="label-form" for="input-nama-pohon">Nama pohon <span class="tanda-wajib" aria-hidden="true">*</span></label>
+            <input class="kontrol" id="input-nama-pohon" name="nama" type="text" required aria-required="true" aria-describedby="error-nama-pohon">
+            <p class="pesan-error" id="error-nama-pohon" role="alert" hidden></p>
+          </div>
+
+          <div class="form-grup">
+            <label class="label-form" for="input-latin-pohon">Nama Latin</label>
+            <input class="kontrol" id="input-latin-pohon" name="namaLatin" type="text" placeholder="Contoh: Swietenia mahagoni">
+          </div>
+
+          <div class="form-grup">
+            <label class="label-form" for="input-usia-pohon">Estimasi usia (tahun)</label>
+            <input class="kontrol" id="input-usia-pohon" name="usia" type="number" min="0" step="1" inputmode="numeric" value="0">
+          </div>
+
+          <div class="form-grup">
+            <label class="label-form" for="input-resapan-pohon">Daya resapan air</label>
+            <select class="pilihan" id="input-resapan-pohon" name="resapanTingkat">
+              <option value="Tinggi">Tinggi</option>
+              <option value="Sedang" selected>Sedang</option>
+              <option value="Rendah">Rendah</option>
+            </select>
+          </div>
+
+          <div class="form-grup">
+            <label class="label-form" for="input-liter-pohon">Perkiraan resapan (L/hari)</label>
+            <input class="kontrol" id="input-liter-pohon" name="resapanLiter" type="number" min="0" step="1" inputmode="numeric" value="0">
+          </div>
+
+          <div class="form-grup">
+            <label class="label-form" for="input-pangkas-pohon">Jadwal pemangkasan</label>
+            <input class="kontrol" id="input-pangkas-pohon" name="jadwalPangkas" type="date">
+          </div>
+
+          <div class="form-grup">
+            <label class="label-form" for="input-kesehatan-pohon">Tingkat kesehatan (0-100) <span class="tanda-wajib" aria-hidden="true">*</span></label>
+            <input class="kontrol" id="input-kesehatan-pohon" name="kesehatan" type="number" min="0" max="100" step="1" inputmode="numeric" required aria-required="true" aria-describedby="error-kesehatan-pohon">
+            <p class="pesan-error" id="error-kesehatan-pohon" role="alert" hidden></p>
+          </div>
+
+          <div class="form-grup">
+            <label class="label-form" for="input-status-pohon">Status</label>
+            <select class="pilihan" id="input-status-pohon" name="status">
+              <option value="aman">Sehat &amp; Aman</option>
+              <option value="perhatian">Perlu Perhatian</option>
+              <option value="kritis">Kondisi Kritis</option>
+              <option value="dikerjakan">Sedang Dikerjakan</option>
+            </select>
+          </div>
+
+          <div class="form-grup">
+            <label class="label-form" for="input-lokasi-pohon">Lokasi</label>
+            <select class="pilihan" id="input-lokasi-pohon" name="lokasiTipe">
+              <option value="taman">Di dalam taman</option>
+              <option value="jalan">Di jalan sekitar taman</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-posisi">
+          <p class="label-form">Posisi pin</p>
+          <p class="bantuan">Klik pada peta lokasi pohon untuk menaruh pin. Peta tetap bisa di-zoom dan digeser.</p>
+          <p class="posisi-nilai" id="status-posisi-pohon">Posisi belum dipilih.</p>
+        </div>
+        
+        <p class="pesan-error" id="error-form-pohon" role="alert" hidden></p>
+
+        <div class="aksi-form">
+          <button class="tombol tombol-sekunder" type="button" id="batal-form-pohon">Batal</button>
+          <button class="tombol tombol-utama" type="submit" id="simpan-form-pohon">Simpan Pohon</button>
+        </div>
+      </form>
+    </dialog>
+
+  <dialog class="panel-detail" id="dialog-pohon" aria-labelledby="judul-detail-pohon">
+    <div class="panel-detail-isi">
+      <div class="panel-detail-kepala">
+        <p class="kode-pohon" id="detail-kode"></p>
+        <button class="panel-tutup" type="button" id="tutup-detail-pohon" aria-label="Tutup detail pohon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">
+            <path d="m6 6 12 12M18 6 6 18"></path>
+          </svg>
+        </button>
+      </div>
+      <h2 class="judul-detail" id="judul-detail-pohon"></h2>
+      <p class="nama-latin" id="detail-latin"></p>
+      <p class="detail-status"><span class="badge" id="detail-badge"></span></p>
+      <dl class="rincian-detail" id="detail-rincian"></dl>
+      <a class="tombol tombol-utama tombol-blok" id="detail-tautan" href="index.html?id=PH-YOG-042">Buka Halaman Publik</a>
+      <div class="detail-aksi">
+        <button class="tombol tombol-sekunder" id="tombol-ubah-pohon" type="button">Ubah</button>
+        <button class="tombol tombol-bahaya" id="tombol-hapus-pohon" type="button">Hapus</button>
+      </div>
+      <p class="bantuan detail-catatan">Perubahan dari dashboard akan terlihat di halaman publik setelah halaman dimuat ulang.</p>
+    </div>
+  </dialog>
+
+  <dialog class="panel-detail" id="dialog-laporan" aria-labelledby="judul-detail-laporan">
+    <div class="panel-detail-isi">
+      <div class="panel-detail-kepala">
+        <p class="kode-pohon" id="detail-laporan-kode"></p>
+        <button class="panel-tutup" type="button" id="tutup-detail-laporan" aria-label="Tutup detail laporan">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">
+            <path d="m6 6 12 12M18 6 6 18"></path>
+          </svg>
+        </button>
+      </div>
+      <h2 class="judul-detail" id="judul-detail-laporan">Detail Laporan Warga</h2>
+      <p class="detail-laporan-meta" id="detail-laporan-meta"></p>
+      <p class="detail-status"><span class="badge" id="detail-laporan-badge"></span></p>
+      <p class="detail-laporan-deskripsi" id="detail-laporan-deskripsi"></p>
+      <figure class="detail-laporan-foto" id="detail-laporan-foto-wadah">
+        <img id="detail-laporan-foto" alt="Foto laporan warga" width="640" height="420">
+      </figure>
+      <dl class="rincian-detail" id="detail-laporan-rincian"></dl>
+      <a class="tombol tombol-sekunder tombol-blok" id="detail-laporan-tautan" href="index.html">Buka Halaman Publik</a>
+    </div>
+  </dialog>
+
+  <dialog class="panel-detail" id="dialog-hapus-pohon" aria-labelledby="judul-hapus-pohon">
+    <div class="panel-detail-isi">
+      <div class="panel-detail-kepala">
+        <p class="kode-pohon" id="hapus-kode-pohon"></p>
+        <button class="panel-tutup" type="button" id="tutup-hapus-pohon" aria-label="Tutup konfirmasi hapus pohon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">
+            <path d="m6 6 12 12M18 6 6 18"></path>
+          </svg>
+        </button>
+      </div>
+      <h2 class="judul-detail" id="judul-hapus-pohon">Hapus pohon?</h2>
+      <p class="teks-redup" id="pesan-hapus-pohon"></p>
+      <p class="pesan-peringatan" id="peringatan-hapus-pohon" role="alert" hidden></p>
+      <div class="aksi-form">
+        <button class="tombol tombol-sekunder" type="button" id="batal-hapus-pohon">Batal</button>
+        <button class="tombol tombol-bahaya" type="button" id="konfirmasi-hapus-pohon">Hapus Pohon</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="js/data.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
